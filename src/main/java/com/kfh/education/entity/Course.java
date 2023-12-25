@@ -23,10 +23,6 @@ public class Course {
 	// Course description
 	private String description;
 	
-	public Course(String name) {
-		this.name = name;
-	}
-
 	public long getId() {
 		return id;
 	}

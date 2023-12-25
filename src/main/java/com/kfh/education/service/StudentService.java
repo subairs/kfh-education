@@ -1,6 +1,11 @@
 package com.kfh.education.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+
+import com.kfh.education.request.StudentRequest;
+import com.kfh.education.response.StudentResponse;
 
 /**
  * 
@@ -10,5 +15,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface StudentService {
+	
+	void createStudent(StudentRequest studentRequest);
+	
+	StudentResponse getStudentById(long studentId);
+	
+	StudentResponse updateStudent(StudentRequest studentRequest);
+	
+	StudentResponse deleteStudentById(long studentId);
+	
+	List<StudentResponse> getAllStudents();
 
 }

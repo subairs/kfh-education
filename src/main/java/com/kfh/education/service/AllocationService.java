@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AllocationService {
 	
+	void alocateCourseForStudent(long studentId, long courseId);
 	
 
 }

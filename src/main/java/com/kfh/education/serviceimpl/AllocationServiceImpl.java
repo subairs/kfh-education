@@ -10,6 +10,12 @@ import com.kfh.education.service.AllocationService;
  */
 
 public class AllocationServiceImpl implements AllocationService {
+
+	@Override
+	public void alocateCourseForStudent(long studentId, long courseId) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
