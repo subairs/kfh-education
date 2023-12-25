@@ -26,7 +26,7 @@ public class StudentRequest {
 	private String teliphone;
 	
 	// address of a student
-	private Address address;
+	private AddressRequest address;
 
 	public String getEnName() {
 		return enName;
@@ -60,11 +60,11 @@ public class StudentRequest {
 		this.teliphone = teliphone;
 	}
 
-	public Address getAddress() {
+	public AddressRequest getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(AddressRequest address) {
 		this.address = address;
 	}
 

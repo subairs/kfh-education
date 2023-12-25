@@ -8,8 +8,10 @@ package com.kfh.education.response;
 public class CourseResponse {
 	private long id;
 	
+	// Name of the course
 	private String name;
 	
+	// Course description
 	private String description;
 	
 

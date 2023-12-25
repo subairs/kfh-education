@@ -25,7 +25,7 @@ public class StudentResponse {
 	private String teliphone;
 	
 	// address of a student
-	private Address address;
+	private AddressResponse address;
 
 	public long getId() {
 		return id;
@@ -67,11 +67,11 @@ public class StudentResponse {
 		this.teliphone = teliphone;
 	}
 
-	public Address getAddress() {
+	public AddressResponse getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(AddressResponse address) {
 		this.address = address;
 	}
 	

@@ -1,7 +1,5 @@
 package com.kfh.education.entity;
 
-import org.hibernate.annotations.Cascade;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,12 +36,14 @@ public class Student {
 	@Column(nullable = false)
 	private String teliphone;
 	
-	
+	// Address associated with the student
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(nullable = false)
+	@JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
 	private Address address;
 	
+	// Courses associated with the student
 	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "course_id", referencedColumnName = "id")
 	private Course course;
 
 	public long getId() {
@@ -102,8 +102,4 @@ public class Student {
 		this.course = course;
 	}
 	
-	
-	
-	
-
 }
