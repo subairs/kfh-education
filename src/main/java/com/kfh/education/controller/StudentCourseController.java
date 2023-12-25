@@ -1,9 +1,12 @@
 package com.kfh.education.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,12 +36,28 @@ public class StudentCourseController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
-	@PutMapping("/update/{studentId}/{courseId}")
+	@PutMapping("/allocate/{studentId}/{courseId}")
 	public ResponseEntity<StudentCourseResponse> alocateCourseForStudent(
-			@PathVariable long courseId, 
-			@PathVariable long studentId){
+			@PathVariable long studentId, 
+			@PathVariable long courseId){
 		StudentCourseResponse studentCourseResponse= studentCourseService.alocateCourseForStudent(studentId, courseId);
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentCourseResponse);
 	}
+	
+	@GetMapping("/all/{courseId}")
+	public ResponseEntity<List<StudentResponse>> getAllStudentsByCourseId(
+			@PathVariable long courseId){
+		List<StudentResponse> studentResponses= studentCourseService.getAllStudentsByCourse(courseId);
+		 
+		return ResponseEntity.status(HttpStatus.OK).body(studentResponses);
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 
 }

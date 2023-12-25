@@ -1,8 +1,11 @@
 package com.kfh.education.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.kfh.education.response.StudentCourseResponse;
+import com.kfh.education.response.StudentResponse;
 
 /**
  * 
@@ -14,6 +17,8 @@ import com.kfh.education.response.StudentCourseResponse;
 public interface StudentCourseService {
 	
 	StudentCourseResponse alocateCourseForStudent(long studentId, long courseId);
+
+	List<StudentResponse> getAllStudentsByCourse(long courseId);
 	
 
 }

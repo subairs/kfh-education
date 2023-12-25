@@ -1,5 +1,8 @@
 package com.kfh.education.serviceimpl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,8 @@ import com.kfh.education.repository.StudentRepository;
 import com.kfh.education.response.StudentCourseResponse;
 import com.kfh.education.response.StudentResponse;
 import com.kfh.education.service.StudentCourseService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 /**
  * 
@@ -38,8 +43,10 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
 	@Override
 	public StudentCourseResponse alocateCourseForStudent(long studentId, long courseId) {
-		Student student = studentRepository.findById(studentId).orElse(null);
-		Course course = courseRepository.findById(courseId).orElse(null);
+		Student student = studentRepository.findById(studentId)
+				.orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + studentId));
+		Course course = courseRepository.findById(courseId)
+				.orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
 		student.setCourse(course);
 		// studentRepository.save(student);
 
@@ -61,6 +68,17 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 		// Map the existing Student to Student dto
 		return modelMapper.map(createdStudent, StudentCourseResponse.class);
 
+	}
+
+	@Override
+	public List<StudentResponse> getAllStudentsByCourse(long courseId) {
+		// TODO Auto-generated method stub
+		List<Student> students = studentRepository.findAllByCourseId(courseId);
+
+		// Map the existing Student to Student dto
+		return students.stream().map(student ->  modelMapper.map(student, StudentResponse.class))
+				.collect(Collectors.toList());
+	
 	}
 
 }
