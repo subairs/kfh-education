@@ -1,4 +1,4 @@
-package com.kfh.subair.studentservice.controller;
+package com.kfh.education.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -6,13 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 
  * @author subair
- * Controller class representing Course controller
+ * Controller class representing student controller
  */
-
 @RestController
-@RequestMapping("course")
-public class CourseController {
-	
-	
+@RequestMapping("student")
+public class StudentController {
 
 }

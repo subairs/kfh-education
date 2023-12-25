@@ -1,13 +1,13 @@
-package com.kfh.subair.studentservice;
+package com.kfh.education;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StudentServiceApplication {
+public class EducationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StudentServiceApplication.class, args);
+		SpringApplication.run(EducationApplication.class, args);
 	}
 
 }

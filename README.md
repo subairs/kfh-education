@@ -1,5 +1,5 @@
-# kfh-student-rest
-project for student restful services. creating with the help of spring boot.
+# kfh-education
+project for education restful services. creating with the help of spring boot.
 
 Step1: Create project using sprig intializer (https://start.spring.io/)
 	1. Select 'Maven' for project.

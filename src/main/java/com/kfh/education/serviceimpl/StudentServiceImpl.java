@@ -1,6 +1,6 @@
-package com.kfh.subair.studentservice.serviceimpl;
+package com.kfh.education.serviceimpl;
 
-import com.kfh.subair.studentservice.service.StudentService;
+import com.kfh.education.service.StudentService;
 
 /**
  * 

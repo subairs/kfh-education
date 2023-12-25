@@ -1,4 +1,4 @@
-package com.kfh.subair.studentservice.service;
+package com.kfh.education.service;
 
 import org.springframework.stereotype.Service;
 

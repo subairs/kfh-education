@@ -1,4 +1,4 @@
-package com.kfh.subair.studentservice.entity;
+package com.kfh.education.entity;
 
 import org.hibernate.annotations.Cascade;
 

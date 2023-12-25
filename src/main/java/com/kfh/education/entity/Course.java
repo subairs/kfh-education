@@ -1,4 +1,4 @@
-package com.kfh.subair.studentservice.entity;
+package com.kfh.education.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

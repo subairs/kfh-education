@@ -1,25 +1,15 @@
-package com.kfh.subair.studentservice.response;
+package com.kfh.education.request;
+
 /**
  * 
  * @author subair
- * Dto class Representing a course response
+ * Dto class representing ca ourse request.
  */
+public class CourseRequest {
 
-public class CourseResponse {
-	private long id;
-	
 	private String name;
 	
 	private String description;
-	
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -36,7 +26,4 @@ public class CourseResponse {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
-
 }

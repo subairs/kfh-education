@@ -1,17 +1,18 @@
-package com.kfh.subair.studentservice.response;
+package com.kfh.education.request;
 
-import com.kfh.subair.studentservice.entity.Address;
+import com.kfh.education.entity.Address;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 /**
  * 
  * @author subair
- * Dto class representing a student response
+ * Dto class representing a student request
  */
-public class StudentResponse {
-	
-	// id of a student
-	private long id;
-	
+public class StudentRequest {
 	// English name of a student
 	private String enName;
 	
@@ -26,14 +27,6 @@ public class StudentResponse {
 	
 	// address of a student
 	private Address address;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getEnName() {
 		return enName;
@@ -74,7 +67,6 @@ public class StudentResponse {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
-	
 
+	
 }
