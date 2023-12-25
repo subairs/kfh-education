@@ -2,6 +2,8 @@ package com.kfh.education.service;
 
 import org.springframework.stereotype.Service;
 
+import com.kfh.education.response.StudentCourseResponse;
+
 /**
  * 
  * @author subair
@@ -9,9 +11,9 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public interface AllocationService {
+public interface StudentCourseService {
 	
-	void alocateCourseForStudent(long studentId, long courseId);
+	StudentCourseResponse alocateCourseForStudent(long studentId, long courseId);
 	
 
 }

@@ -16,11 +16,11 @@ import com.kfh.education.response.StudentResponse;
 @Service
 public interface StudentService {
 	
-	void createStudent(StudentRequest studentRequest);
+	StudentResponse createStudent(StudentRequest studentRequest);
 	
 	StudentResponse getStudentById(long studentId);
 	
-	StudentResponse updateStudent(StudentRequest studentRequest);
+	StudentResponse updateStudent(long studentId, StudentRequest studentRequest);
 	
 	StudentResponse deleteStudentById(long studentId);
 	
