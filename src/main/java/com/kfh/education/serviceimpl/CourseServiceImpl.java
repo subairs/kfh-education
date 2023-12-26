@@ -13,6 +13,7 @@ import org.springframework.web.client.HttpServerErrorException.InternalServerErr
 
 import com.kfh.education.entity.Course;
 import com.kfh.education.exception.CustomException;
+import com.kfh.education.exception.ErrorHandlerMessage;
 import com.kfh.education.exception.NotFoundException;
 import com.kfh.education.exception.ServerSideException;
 import com.kfh.education.repository.CourseRepository;
@@ -51,39 +52,42 @@ public class CourseServiceImpl implements CourseService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CourseServiceImpl.class);
 
-	
 	/**
 	 * Create new Course based on the provided CourseRequest.
 	 * 
-	 * @param courseRequest the Dto containing the details of the Course to be created.
+	 * @param courseRequest the Dto containing the details of the Course to be
+	 *                      created.
 	 * 
 	 * @return The Dto of the the created Course.
 	 * 
 	 * @throws ServersideException if there is an issue facing server side.
 	 * 
-	 * @throws CustomException if there is an issue with creating Course.
+	 * @throws CustomException     if there is an issue with creating Course.
 	 */
 	@Override
 	public CourseResponse createCourse(CourseRequest courseRequest) {
 		LOGGER.info("***** CourseService -> Create Course Started - " + new Date());
 
-		// Map the CourseRequest to an Course Entity 
+		// Map the CourseRequest to an Course Entity
 		Course course = modelMapper.map(courseRequest, Course.class);
 		Course createdCourse;
 		try {
-			
+
 			// Save the Course entity using course repository
 			createdCourse = courseRepository.save(course);
 		} catch (InternalServerError ex) {
+			LOGGER.error(ex.getMessage());
 			throw new ServerSideException(ex.getMessage());
+		} catch (Exception ex) {
+			LOGGER.error(ex.getMessage());
+			// Catch any other unexpected exceptions
+			// throw new CustomException("An error occurred during course save: " +
+			// ex.getMessage());
+			throw new CustomException(ErrorHandlerMessage.SAVING_DB);
 		}
-		catch (Exception ex) {
-            // Catch any other unexpected exceptions
-            throw new CustomException("An error occurred during course save: " + ex.getMessage());
-        }
 
 		LOGGER.info("***** CourseService -> Create Course End - " + new Date());
-		// Map the saved Course entity back to an Course dto 
+		// Map the saved Course entity back to an Course dto
 		return modelMapper.map(createdCourse, CourseResponse.class);
 
 	}
@@ -91,15 +95,16 @@ public class CourseServiceImpl implements CourseService {
 	/**
 	 * Retrieve a Course Dto by the provided course id.
 	 * 
-	 * @param The Id of course to be retrieve .
+	 * @param courseId The Id of course to be retrieve .
 	 * 
 	 * @return the Course dto of the Retrieved course.
 	 * 
-	 * @throws EntityNotFoundException if there is an issue with not found course with provided id.
+	 * @throws EntityNotFoundException if there is an issue with not found course
+	 *                                 with provided id.
 	 */
 	@Override
 	public CourseResponse getCourseById(long courseId) {
-		
+
 		// Use the courseRepository to find the Course entity by id.
 		Course course = courseRepository.findById(courseId)
 
@@ -110,14 +115,15 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	/**
-	 * Update the details of existing Course based on the provided Course dto and course id.
+	 * Update the details of existing Course based on the provided Course dto and
+	 * course id.
 	 * 
-	 * @param courseId The id of the Course to be updated.
+	 * @param courseId      The id of the Course to be updated.
 	 * 
 	 * @param courseRequest the dto containing updated details of the Course.
 	 * 
 	 * @throws EntityNotFoundException if the Course with the given id is not found.
- 	 */
+	 */
 	@Override
 	public CourseResponse updateCourse(long courseId, CourseRequest courseRequest) {
 
@@ -126,11 +132,16 @@ public class CourseServiceImpl implements CourseService {
 				.orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
 		existingCourse.setName(courseRequest.getName());
 		existingCourse.setDescription(courseRequest.getDescription());
-		
-		// Save the updated Course entity using the course repository.
-		Course updatedCourse = courseRepository.save(existingCourse);
-		
-		//Map the updated Course entity back to a Course dto
+
+		Course updatedCourse = null;
+		try {
+			// Save the updated Course entity using the course repository.
+			updatedCourse = courseRepository.save(existingCourse);
+		} catch (Exception ex) {
+			LOGGER.error(ex.getMessage());
+			throw new CustomException(ErrorHandlerMessage.SAVING_DB);
+		}
+		// Map the updated Course entity back to a Course dto
 		return modelMapper.map(updatedCourse, CourseResponse.class);
 
 	}
@@ -138,28 +149,29 @@ public class CourseServiceImpl implements CourseService {
 	/**
 	 * Delete a Course by provided course id.
 	 * 
-	 * @param The id  of the Course to  be deleted.
+	 * @param Student The id of the Course to be deleted.
 	 * 
 	 * @return The existing Course Dto
 	 * 
 	 * @throws EntityNotFoundException if the course with the given id is not found.
 	 * 
-	 * @throws CustomException if there is an issue with deleting the Course.
+	 * @throws CustomException         if there is an issue with deleting the
+	 *                                 Course.
 	 */
 	@Override
 	public CourseResponse deleteCourseById(long courseId) {
-		
+
 		// Find the Course entity by course id
 		Course existingCourse = courseRepository.findById(courseId)
 				.orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
 		try {
-			
+
 			// Delete the Course entity using the course repository
 			courseRepository.delete(existingCourse);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			throw new CustomException(e.getMessage());
 		}
-		
+
 		// Map the existing course to course dto
 		return modelMapper.map(existingCourse, CourseResponse.class);
 

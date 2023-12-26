@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.kfh.education.request.CourseRequest;
 import com.kfh.education.response.StudentCourseResponse;
 import com.kfh.education.response.StudentResponse;
 
@@ -19,6 +20,8 @@ public interface StudentCourseService {
 	StudentCourseResponse alocateCourseForStudent(long studentId, long courseId);
 
 	List<StudentResponse> getAllStudentsByCourse(long courseId);
+
+	StudentCourseResponse updateCourseForStudent(long studentId, long courseId);
 	
 
 }

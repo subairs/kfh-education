@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kfh.education.request.CourseRequest;
 import com.kfh.education.request.StudentRequest;
 import com.kfh.education.response.StudentCourseResponse;
 import com.kfh.education.response.StudentResponse;
@@ -36,7 +37,7 @@ public class StudentCourseController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
-	@PutMapping("/allocate/{studentId}/{courseId}")
+	@PutMapping("/allocate-course-for-student/{studentId}/{courseId}")
 	public ResponseEntity<StudentCourseResponse> alocateCourseForStudent(
 			@PathVariable long studentId, 
 			@PathVariable long courseId){
@@ -44,7 +45,7 @@ public class StudentCourseController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentCourseResponse);
 	}
 	
-	@GetMapping("/all/{courseId}")
+	@GetMapping("/all-students-by-course/{courseId}")
 	public ResponseEntity<List<StudentResponse>> getAllStudentsByCourseId(
 			@PathVariable long courseId){
 		List<StudentResponse> studentResponses= studentCourseService.getAllStudentsByCourse(courseId);
@@ -52,6 +53,14 @@ public class StudentCourseController {
 		return ResponseEntity.status(HttpStatus.OK).body(studentResponses);
 		
 		
+	}
+	
+	@PutMapping("/course-update-by-student/{studentId}/{courseId}")
+	public ResponseEntity<StudentCourseResponse> updateCourseByStudent(
+			@PathVariable long studentId,
+			@PathVariable long courseId){
+		StudentCourseResponse studentCourseResponse= studentCourseService.updateCourseForStudent(studentId, courseId);
+		return ResponseEntity.status(HttpStatus.CREATED).body(studentCourseResponse);
 	}
 	
 	
