@@ -42,21 +42,20 @@ public class StudentController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
 
-
-	@GetMapping("/all")
+	@GetMapping("/get-all")
 	public ResponseEntity<List<StudentResponse>> getAllStudents() {
 		List<StudentResponse> studentResponses = studentService.getAllStudents();
 		LOGGER.info(""+ studentResponses);
 		return ResponseEntity.status(HttpStatus.OK).body(studentResponses);
 	}
 
-	@PostMapping("/create")
+	@PostMapping("/register")
 	public ResponseEntity<StudentResponse> createStudent(@RequestBody StudentRequest studentRequest) {
 		StudentResponse studentResponse = studentService.createStudent(studentRequest);
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentResponse);
 	}
 
-	@GetMapping("/{studentId}")
+	@GetMapping("get/{studentId}")
 	public ResponseEntity<StudentResponse> getStudentById(@PathVariable long studentId){
 		
 		StudentResponse studentResponse= studentService.getStudentById(studentId);
@@ -72,7 +71,7 @@ public class StudentController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentResponse);
 	}
 	
-	@DeleteMapping("/{studentId}")
+	@DeleteMapping("delete/{studentId}")
 	public ResponseEntity<StudentResponse> deleteStudentById(@PathVariable long studentId){
 		StudentResponse studentResponse= studentService.deleteStudentById(studentId);
 		return ResponseEntity.status(HttpStatus.OK).body(studentResponse);

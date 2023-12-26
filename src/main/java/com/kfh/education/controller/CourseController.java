@@ -47,7 +47,7 @@ public class CourseController {
 
 
 
-	@GetMapping("/all")
+	@GetMapping("/get-all")
 	public ResponseEntity<List<CourseResponse>> getAllCourses() {
 		List<CourseResponse> courseResponses = courseService.getAllCourses();
 		LOGGER.info(""+ courseResponses);
@@ -60,7 +60,7 @@ public class CourseController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(courseResponse);
 	}
 
-	@GetMapping("/{courseId}")
+	@GetMapping("get/{courseId}")
 	public ResponseEntity<CourseResponse> getCourseById(@PathVariable long courseId){
 		
 		CourseResponse courseResponse= courseService.getCourseById(courseId);
@@ -77,7 +77,7 @@ public class CourseController {
 	}
 	
 
-	@DeleteMapping("/{courseId}")
+	@DeleteMapping("delete/{courseId}")
 	public ResponseEntity<CourseResponse> deleteCourseById(@PathVariable long courseId){
 		
 		CourseResponse courseResponse= courseService.deleteCourseById(courseId);
