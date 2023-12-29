@@ -1,4 +1,4 @@
-package com.kfh.education.config;
+package com.kfh.education.config.security;
 
 import java.util.ArrayList;
 import java.util.Collection;

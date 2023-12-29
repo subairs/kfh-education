@@ -27,7 +27,9 @@ import jakarta.persistence.EntityNotFoundException;
 
 /**
  * 
- * @author subair Service class representing StudentCourseService.
+ * @author subair
+ * 
+ *         Service class representing StudentCourseServiceImpl.
  * @see StudentCourseService
  */
 
@@ -38,6 +40,13 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 	private final CourseRepository courseRepository;
 	private final ModelMapper modelMapper;
 
+	/**
+	 * Constructor based injection.
+	 * 
+	 * @param studentRepository The repository for student entity.
+	 * @param courseRepository  The repository for course entity.
+	 * @param modelMapper       Dto class map into entity and and back to Dto.
+	 */
 	@Autowired
 	public StudentCourseServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository,
 			ModelMapper modelMapper) {
@@ -46,16 +55,27 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 		this.modelMapper = modelMapper;
 	}
 
+	// Logger for StudentCourseServiseImpl
 	private static final Logger LOGGER = LoggerFactory.getLogger(StudentCourseServiceImpl.class);
 
+	/**
+	 * Allocate course for a student.
+	 * 
+	 * @param studentId The ID of student to Allocate a course.
+	 * @param courseId  The ID of course for allocate a student.
+	 * 
+	 * @return StudentCourseRespose Dto representing student and course.
+	 * 
+	 * 
+	 */
 	@Override
-	public StudentCourseResponse alocateCourseForStudent(long studentId, long courseId) {
+	public StudentCourseResponse allocateCourseForStudent(long studentId, long courseId) {
 		Student student = studentRepository.findById(studentId)
 				.orElseThrow(() -> new EntityNotFoundException("Student not found with ID: " + studentId));
 		Course course = courseRepository.findById(courseId)
 				.orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
 		student.setCourse(course);
-		
+
 		Student createdStudent = null;
 		try {
 			if (student != null && course != null) {
@@ -77,6 +97,17 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
 	}
 
+	/**
+	 * Retrieves a list of all students by a course then map into list of
+	 * StudentResponse.
+	 * 
+	 * @return List of Student Dtos representing all Students.
+	 * 
+	 * @throws CustomException,  if an issue face at the time of retrieve for
+	 *                           database.
+	 * 
+	 * @throws NotFoundException if the retrieved student list is empty.
+	 */
 	@Override
 	public List<StudentResponse> getAllStudentsByCourse(long courseId) {
 		List<Student> students = null;
@@ -85,7 +116,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 		} catch (Exception ex) {
 			LOGGER.error(ex.getMessage());
 			throw new CustomException(ErrorHandlerMessage.RETRIEVING_DB);
-			
+
 		}
 		if (students.isEmpty()) {
 			LOGGER.warn("Student not found with Course ID: " + courseId);
@@ -98,6 +129,20 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
 	}
 
+	/**
+	 * Update course of a student.
+	 * 
+	 * @param studentId The ID of student.
+	 * @param courseId  the ID of the course.
+	 * 
+	 * @return Updated StudentCourseResponseDTO.
+	 * 
+	 * @throws EntityNotFoundException if the course with the given id is not found.
+	 * 
+	 * @throws CustomException         if there is an issue with deleting the
+	 *                                 Course.
+	 * 
+	 */
 	@Override
 	public StudentCourseResponse updateCourseForStudent(long studentId, long courseId) {
 		Student student = studentRepository.findById(studentId)

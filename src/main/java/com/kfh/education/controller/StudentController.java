@@ -20,6 +20,8 @@ import com.kfh.education.response.CourseResponse;
 import com.kfh.education.response.StudentResponse;
 import com.kfh.education.service.StudentService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 /**
  * 
  * @author subair
@@ -27,13 +29,15 @@ import com.kfh.education.service.StudentService;
  */
 @RestController
 @RequestMapping("student")
+@SecurityRequirement(name = "kfh-education")
 public class StudentController {
 	
 	private final StudentService studentService;
 
 	/**
+	 * Constructor-based dependency injection for StudentService.
 	 * 
-	 * @param studentService
+	 * @param studentService The service for Student.
 	 */
 	public StudentController(StudentService studentService) {
 		this.studentService = studentService;
@@ -42,6 +46,11 @@ public class StudentController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
 
+	/**
+	 * Retrieve all Student.
+	 * 
+	 * @return ResponseEntity with a list of students and an HTTP status code.
+	 */
 	@GetMapping("/get-all")
 	public ResponseEntity<List<StudentResponse>> getAllStudents() {
 		List<StudentResponse> studentResponses = studentService.getAllStudents();
@@ -49,12 +58,24 @@ public class StudentController {
 		return ResponseEntity.status(HttpStatus.OK).body(studentResponses);
 	}
 
+	/**
+	 * Create a new Student.
+	 * 
+	 * @param studentRequest The details of the new Student created.
+	 * @return ResponseEntity with the created Student details and HTTP status code.
+	 */
 	@PostMapping("/register")
 	public ResponseEntity<StudentResponse> createStudent(@RequestBody StudentRequest studentRequest) {
 		StudentResponse studentResponse = studentService.createStudent(studentRequest);
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentResponse);
 	}
 
+	/**
+	 * Retrieve a Student by studentId.
+	 * 
+	 * @param studentId ID of the Student to retrieve.
+	 * @return ResponseEntity with Student details and the HTTP status code.
+	 */
 	@GetMapping("get/{studentId}")
 	public ResponseEntity<StudentResponse> getStudentById(@PathVariable long studentId){
 		
@@ -63,6 +84,14 @@ public class StudentController {
 		
 	}
 	
+	
+	/**
+	 * Update an existing Student by courseId.
+	 * 
+	 * @param studentRequest The updated details of Student.
+	 * @param studentId The ID of the Student to update. 
+	 * @return ResponseEntity with updated Student details and an HTTP status code.
+	 */
 	@PutMapping("/update/{studentId}")
 	public ResponseEntity<StudentResponse> updateStudent(
 			@RequestBody StudentRequest studentRequest, 
@@ -71,6 +100,12 @@ public class StudentController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentResponse);
 	}
 	
+	/**
+	 * Delete a Student by courseId.
+	 * 
+	 * @param studentId The ID of the Student to delete.
+	 * @return ResponseEntity with Deleted Student details and status code. 
+	 */
 	@DeleteMapping("delete/{studentId}")
 	public ResponseEntity<StudentResponse> deleteStudentById(@PathVariable long studentId){
 		StudentResponse studentResponse= studentService.deleteStudentById(studentId);

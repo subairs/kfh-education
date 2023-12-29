@@ -28,7 +28,9 @@ import jakarta.persistence.EntityNotFoundException;
 
 /**
  * 
- * @author subair Service class representing for student services
+ * @author subair
+ * 
+ *  Service class representing for student services
  * @see StudentService
  */
 
