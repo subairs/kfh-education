@@ -1,5 +1,7 @@
 package com.kfh.education.request;
 
+import jakarta.validation.constraints.NotBlank;
+
 /**
  * 
  * @author subair
@@ -8,6 +10,7 @@ package com.kfh.education.request;
 public class CourseRequest {
 
 	// Name of the course
+	@NotBlank(message = "Course name cannot be blank!")
 	private String name;
 	
 	// Course description

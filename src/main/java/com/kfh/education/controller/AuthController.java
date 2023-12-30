@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("user")
-@SecurityRequirement(name = "kfh-education")
+//@SecurityRequirement(name = "kfh-education")
+@Validated
 public class AuthController {
 	
 	private final AuthenticationManager authenticationManager;
@@ -49,7 +51,7 @@ public class AuthController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 	
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<String> createUser(@RequestBody @Valid RegistrationRequest request) {
     	authService.createUserWithRoles(request.getUsername(), request.getPassword(), request.getRoles());
         return ResponseEntity.ok("User created successfully");
     }
