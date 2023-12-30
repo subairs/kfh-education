@@ -44,7 +44,7 @@ Create project using spring initializer (https://start.spring.io/)
 	1. Select 'Maven' for the project.
 	2. Select 'Java' for language.
 	3. Select/update Spring boot version (Updated 3.0.4).
-	4. Add dependencies for 'web, security, data jpa, h2 ad dev tools1'.
+	4. Add dependencies for 'web, security, data jpa, h2, and dev tools.
 	5. Update group and Artifact.
 	6. Select packaging 'Jar' and Java version '17'
 	
