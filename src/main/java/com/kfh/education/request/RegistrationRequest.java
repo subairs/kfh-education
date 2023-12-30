@@ -2,10 +2,21 @@ package com.kfh.education.request;
 
 import java.util.Set;
 
-public class RegistrationRequest {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
+public class RegistrationRequest {
+	
+	@NotBlank(message = "Username cannot be blank!")
+	@Size(min=3, max=15, message ="Username must be between 3 and 15 characters!")
     private String username;
-    private String password;
+    
+	@NotBlank(message = "Password cannot be blank!")
+	@Size(min=3, max=15, message ="Password must be between 3 and 15 characters!")
+	private String password;
+	
+	
+	@NotBlank(message = "Role cannot be blank!")
     private Set<String> roles;
 	public String getUsername() {
 		return username;

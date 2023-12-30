@@ -1,5 +1,7 @@
 package com.kfh.education.entity;
 
+import com.kfh.education.validation.ArabicCharacters;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,6 +28,7 @@ public class Student {
 	
 	// Arabic name of the student
 	@Column(nullable = false)
+	@ArabicCharacters
 	private String arName;
 	
 	// Email of the student
