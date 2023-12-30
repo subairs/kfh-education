@@ -1,24 +1,45 @@
 
-package com.kfh.education.config;
+package com.kfh.education.config.security;
 
 import io.jsonwebtoken.Claims; 
 import io.jsonwebtoken.Jwts; 
 import io.jsonwebtoken.SignatureAlgorithm; 
 import io.jsonwebtoken.io.Decoders; 
-import io.jsonwebtoken.security.Keys; 
+import io.jsonwebtoken.security.Keys;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails; 
-import org.springframework.stereotype.Component; 
+import org.springframework.stereotype.Component;
+
+import com.kfh.education.entity.Role;
+import com.kfh.education.serviceimpl.UserDetailsServiceImpl;
 
 import java.security.Key; 
 import java.util.Date; 
-import java.util.HashMap; 
-import java.util.Map; 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function; 
 @Component
 public class JwtService {
+	private final UserDetailsServiceImpl userDetailsServiceImpl;
+	
+	public JwtService(UserDetailsServiceImpl  userDetailsServiceImpl) {
+		this.userDetailsServiceImpl = userDetailsServiceImpl;
+	}
 
-    public static final String SECRET = "357638792F423F4428472B4B6250655368566D597133743677397A2443264629";
+    // public static final String SECRET = "357638792F423F4428472B4B6250655368566D597133743677397A2443264629";
+    
+	@Value("${jwt.secret}")
+    private  String JWT_SECRET;
 
+    @Value("${jwt.expirationMs}")
+    private  int JWT_EXPIRATION_MS;
+    
+    
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -52,8 +73,10 @@ public class JwtService {
 
 
 
-    public String GenerateToken(String username){
+    public String generateToken(String username){
+    	UserDetails userDetails =userDetailsServiceImpl.loadUserByUsername(username); 
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", userDetails.getAuthorities());
         return createToken(claims, username);
     }
 
@@ -65,12 +88,13 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*1))
+                .setExpiration(new Date(System.currentTimeMillis()+JWT_EXPIRATION_MS))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
     private Key getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+        byte[] keyBytes = Decoders.BASE64.decode(JWT_SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+    
 }
