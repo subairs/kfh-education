@@ -17,7 +17,7 @@ import com.kfh.education.response.StudentResponse;
 @Service
 public interface StudentCourseService {
 	
-	StudentCourseResponse alocateCourseForStudent(long studentId, long courseId);
+	StudentCourseResponse allocateCourseForStudent(long studentId, long courseId);
 
 	List<StudentResponse> getAllStudentsByCourse(long courseId);
 

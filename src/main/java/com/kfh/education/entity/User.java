@@ -17,7 +17,7 @@ import jakarta.persistence.ManyToMany;
  */
 
 // If using H2 db, the user is not possible to create as table
-@Entity(name = "RegUser")
+@Entity(name = "user_tbl")
 public class User {
 	
 	@Id

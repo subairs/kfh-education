@@ -1,4 +1,4 @@
-package com.kfh.education.config;
+package com.kfh.education.config.security;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
