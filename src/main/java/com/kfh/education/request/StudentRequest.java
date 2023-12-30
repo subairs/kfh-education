@@ -1,11 +1,11 @@
 package com.kfh.education.request;
 
-import com.kfh.education.entity.Address;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kfh.education.validation.ArabicCharacters;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * 
@@ -13,19 +13,33 @@ import jakarta.persistence.OneToOne;
  * Dto class representing a student request
  */
 public class StudentRequest {
+	
 	// English name of a student
+	@NotBlank(message = "English name cannot be blank!")
+	@Size(min=2, message="Contains atleast 2 characters")
+	@JsonProperty("name") // Specify the display name for API/documentation
 	private String enName;
 	
+	@NotBlank(message = "Arabic name cannot be blank!")
+	// CustomAnothation for validate arabic characters
+	@ArabicCharacters(message = "Arabic name should contain only Arabic Characters!" )
+	
+	@JsonProperty("arabicName") // Specify the display name for API/documentation
 	// Arabic name of a student
+	
 	private String arName;
 	
 	// Email of a student
+	@Email(message = "Please provide a valid email address!")
 	private String email;
 	
 	// mobile number or land line number
+	@NotBlank(message = "Telephone cannot be blank!")
 	private String teliphone;
 	
+	
 	// address of a student
+	// @NotBlank(message="Address cannot be blank!")
 	private AddressRequest address;
 
 	public String getEnName() {

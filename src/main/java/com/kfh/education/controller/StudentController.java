@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.kfh.education.response.StudentResponse;
 import com.kfh.education.service.StudentService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 
 /**
  * 
@@ -29,6 +31,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
  */
 @RestController
 @RequestMapping("student")
+@Validated
 @SecurityRequirement(name = "kfh-education")
 public class StudentController {
 	
@@ -65,7 +68,7 @@ public class StudentController {
 	 * @return ResponseEntity with the created Student details and HTTP status code.
 	 */
 	@PostMapping("/register")
-	public ResponseEntity<StudentResponse> createStudent(@RequestBody StudentRequest studentRequest) {
+	public ResponseEntity<StudentResponse> createStudent(@RequestBody @Valid StudentRequest studentRequest) {
 		StudentResponse studentResponse = studentService.createStudent(studentRequest);
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentResponse);
 	}
@@ -94,7 +97,7 @@ public class StudentController {
 	 */
 	@PutMapping("/update/{studentId}")
 	public ResponseEntity<StudentResponse> updateStudent(
-			@RequestBody StudentRequest studentRequest, 
+			@RequestBody @Valid StudentRequest studentRequest, 
 			@PathVariable long studentId){
 		StudentResponse studentResponse= studentService.updateStudent(studentId, studentRequest);
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentResponse);
