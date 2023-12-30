@@ -15,7 +15,7 @@ import jakarta.validation.constraints.Size;
 public class StudentRequest {
 	
 	// English name of a student
-	@NotBlank(message = "English name cannot be blank!")
+	@NotBlank(message = "Name cannot be blank!")
 	@Size(min=2, message="Contains atleast 2 characters")
 	@JsonProperty("name") // Specify the display name for API/documentation
 	private String enName;
@@ -23,10 +23,8 @@ public class StudentRequest {
 	@NotBlank(message = "Arabic name cannot be blank!")
 	// CustomAnothation for validate arabic characters
 	@ArabicCharacters(message = "Arabic name should contain only Arabic Characters!" )
-	
 	@JsonProperty("arabicName") // Specify the display name for API/documentation
 	// Arabic name of a student
-	
 	private String arName;
 	
 	// Email of a student

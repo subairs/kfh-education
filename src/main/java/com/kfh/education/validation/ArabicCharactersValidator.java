@@ -14,6 +14,6 @@ public class ArabicCharactersValidator implements ConstraintValidator<ArabicChar
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         // Validate that the value contains only Arabic characters
-        return value != null && value.matches("\\p{InArabic}+");
+        return value != null && value.matches("[\\p{InArabic}. ]+");
     }
 }
