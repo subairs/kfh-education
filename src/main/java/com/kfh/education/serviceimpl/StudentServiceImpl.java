@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 
 import com.kfh.education.entity.Address;
@@ -69,6 +70,7 @@ public class StudentServiceImpl implements StudentService {
 	 * @throws CustomException     if there is an issue with creating Course.
 	 */
 	@Override
+	@Transactional
 	public StudentResponse createStudent(StudentRequest studentRequest) {
 		LOGGER.info("***** CourseService -> Create Course Started - " + new Date());
 
