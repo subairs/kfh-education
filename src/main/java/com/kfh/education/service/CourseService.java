@@ -1,11 +1,11 @@
 package com.kfh.education.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.kfh.education.request.CourseRequest;
+import com.kfh.education.request.CourseUpdateRequest;
 import com.kfh.education.response.CourseResponse;
 
 
@@ -22,9 +22,9 @@ public interface CourseService {
 	
 	CourseResponse getCourseById(long courseId);
 	
-	CourseResponse updateCourse(long courseId, CourseRequest courseRequest);
+	CourseResponse updateCourse(long courseId, CourseUpdateRequest courseRequest);
 	
-	CourseResponse deleteCourseById(long courseId);
+	boolean deleteCourseById(long courseId);
 	
 	List<CourseResponse> getAllCourses();
 	

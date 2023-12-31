@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kfh.education.request.CourseRequest;
+import com.kfh.education.request.CourseUpdateRequest;
 import com.kfh.education.response.CourseResponse;
 import com.kfh.education.service.CourseService;
 
@@ -99,7 +99,7 @@ public class CourseController {
 	 */
 	@PutMapping("/update/{courseId}")
 	public ResponseEntity<CourseResponse> updateCourse(
-			@RequestBody @Valid CourseRequest courseRequest, 
+			@RequestBody @Valid CourseUpdateRequest courseRequest, 
 			@PathVariable long courseId){
 		CourseResponse courseResponse= courseService.updateCourse(courseId, courseRequest);
 		return ResponseEntity.status(HttpStatus.CREATED).body(courseResponse);
@@ -112,10 +112,10 @@ public class CourseController {
 	 * @return ResponseEntity with Deleted Course details and status code. 
 	 */
 	@DeleteMapping("delete/{courseId}")
-	public ResponseEntity<CourseResponse> deleteCourseById(@PathVariable long courseId){
+	public ResponseEntity<Boolean> deleteCourseById(@PathVariable long courseId){
 		
-		CourseResponse courseResponse= courseService.deleteCourseById(courseId);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(courseResponse);
+		boolean isDeleted= courseService.deleteCourseById(courseId);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(isDeleted);
 		
 	}
 }

@@ -18,6 +18,7 @@ import com.kfh.education.exception.NotFoundException;
 import com.kfh.education.exception.ServerSideException;
 import com.kfh.education.repository.CourseRepository;
 import com.kfh.education.request.CourseRequest;
+import com.kfh.education.request.CourseUpdateRequest;
 import com.kfh.education.response.CourseResponse;
 import com.kfh.education.service.CourseService;
 
@@ -125,14 +126,16 @@ public class CourseServiceImpl implements CourseService {
 	 * @throws EntityNotFoundException if the Course with the given id is not found.
 	 */
 	@Override
-	public CourseResponse updateCourse(long courseId, CourseRequest courseRequest) {
+	public CourseResponse updateCourse(long courseId, CourseUpdateRequest updatedCourseRequest) {
 
 		// Use the courseRepository to find the Course entity by id.
 		Course existingCourse = courseRepository.findById(courseId)
 				.orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
-		existingCourse.setName(courseRequest.getName());
-		existingCourse.setDescription(courseRequest.getDescription());
-
+		//existingCourse.setName(updatedCourseRequest.getName());
+		//existingCourse.setDescription(updatedCourseRequest.getDescription());
+		 // Update the existing course entity with the data from the updatedCourseRequest
+       modelMapper.map(updatedCourseRequest, existingCourse);
+		
 		Course updatedCourse = null;
 		try {
 			// Save the updated Course entity using the course repository.
@@ -159,7 +162,7 @@ public class CourseServiceImpl implements CourseService {
 	 *                                 Course.
 	 */
 	@Override
-	public CourseResponse deleteCourseById(long courseId) {
+	public boolean deleteCourseById(long courseId) {
 
 		// Find the Course entity by course id
 		Course existingCourse = courseRepository.findById(courseId)
@@ -172,8 +175,9 @@ public class CourseServiceImpl implements CourseService {
 			throw new CustomException(e.getMessage());
 		}
 
+		return true;
 		// Map the existing course to course dto
-		return modelMapper.map(existingCourse, CourseResponse.class);
+		//return modelMapper.map(existingCourse, CourseResponse.class);
 
 	}
 

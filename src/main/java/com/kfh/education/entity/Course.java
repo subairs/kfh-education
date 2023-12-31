@@ -23,6 +23,17 @@ public class Course {
 	// Course description
 	private String description;
 	
+	public Course() {
+		
+	}
+	
+	public Course(long id, String name, String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
+
 	public long getId() {
 		return id;
 	}
